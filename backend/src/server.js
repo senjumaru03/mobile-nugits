@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const userRouter = require('./routes/AuthRoutes')
+const profileRouter = require('./routes/ProfileRoutes')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,7 +19,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use(express.json())
 
-app.use('/api/users', userRouter);
+app.use('/users', userRouter);
+app.use('/profiles', profileRouter);
 
 app.listen(port, ()=>{
     console.log(`Connected to port ${port}`);
