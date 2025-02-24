@@ -53,6 +53,7 @@ const Profile = new mongoose.Schema({
         email: {
             type: String,
             required: true,
+            ref: 'verifiedUsers',
         },
         birthplace: {
             type: String,

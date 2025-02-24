@@ -12,7 +12,17 @@ exports.getProfiles = async (req, res) => {
 
 exports.saveProfile = async (req, res) => {
     try {
-        const profile = new Profile(req.body);
+        // const profile = new Profile(req.body);
+
+        const {email, form1, form2, form3} = req.body;
+
+        const profile = new Profile({
+            email,
+            form1,
+            form2,
+            form3,
+        });
+
         await profile.save();
         res.status(201).json({ message: 'Profile saved successfully.' });
     } catch (error) {
@@ -23,7 +33,17 @@ exports.saveProfile = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
     try {
-        const profile = await Profile.findById(req.params.id);
+        // const profile = await Profile.findById(req.params.id);
+
+        const email = req.params.email;
+
+        const profile = await Profile.findOne({ 'form1.email': email });
+        
+        if(!profile) {
+            return res.status(404).json({ message: 'Profile not found.' });
+        }
+
+
         res.json(profile);
     } catch (error) {
         console.error('Get profile error', error);
